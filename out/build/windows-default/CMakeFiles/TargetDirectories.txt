@@ -1,0 +1,6 @@
+C:/Users/hamid/STM32CubeIDE/workspace_1.17.0/mpg_stm32f4_cmake2/out/build/windows-default/CMakeFiles/mpg_stm32f4_cmake2.dir
+C:/Users/hamid/STM32CubeIDE/workspace_1.17.0/mpg_stm32f4_cmake2/out/build/windows-default/CMakeFiles/edit_cache.dir
+C:/Users/hamid/STM32CubeIDE/workspace_1.17.0/mpg_stm32f4_cmake2/out/build/windows-default/CMakeFiles/rebuild_cache.dir
+C:/Users/hamid/STM32CubeIDE/workspace_1.17.0/mpg_stm32f4_cmake2/out/build/windows-default/osal/CMakeFiles/osal.dir
+C:/Users/hamid/STM32CubeIDE/workspace_1.17.0/mpg_stm32f4_cmake2/out/build/windows-default/osal/CMakeFiles/edit_cache.dir
+C:/Users/hamid/STM32CubeIDE/workspace_1.17.0/mpg_stm32f4_cmake2/out/build/windows-default/osal/CMakeFiles/rebuild_cache.dir

@@ -1,43 +1,9 @@
-#############################################################################################################################
-# file:  CMakeLists.txt
-# brief: Template "CMakeLists.txt" for building of executables and static libraries.
-#
-# usage: Edit "VARIABLES"-section to suit project requirements.
-#        For debug build:
-#          cmake -DCMAKE_TOOLCHAIN_FILE=cubeide-gcc.cmake  -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
-#          make -C Debug VERBOSE=1 -j
-#        For release build:
-#          cmake -DCMAKE_TOOLCHAIN_FILE=cubeide-gcc.cmake  -S ./ -B Release -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
-#          make -C Release VERBOSE=1 -j
-#############################################################################################################################
-cmake_minimum_required(VERSION 3.20)
 
+cmake_minimum_required(VERSION 3.20)
 #######################################################################
 set(CMAKE_TOOLCHAIN_PATH "E:/Programs/Cube/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.1.0.202410251130/tools/bin/")
 set(STLINK_CLI_PATH "C:/Program Files (x86)/STMicroelectronics/STM32 ST-LINK Utility/ST-LINK Utility/ST-LINK_CLI.exe")
 set(TOOLCHAIN_PREFIX arm-none-eabi-)
-###################### CONSTANTS ######################################
-set (PROJECT_TYPE_EXECUTABLE          "exe")
-set (PROJECT_TYPE_STATIC_LIBRARY      "static-lib")
-set (MCPU_CORTEX_M0				      "-mcpu=cortex-m0")
-set (MCPU_CORTEX_M0PLUS				  "-mcpu=cortex-m0plus")
-set (MCPU_CORTEX_M3				      "-mcpu=cortex-m3")
-set (MCPU_CORTEX_M4				      "-mcpu=cortex-m4")
-set (MCPU_CORTEX_M7				      "-mcpu=cortex-m7")
-set (MCPU_CORTEX_M33				  "-mcpu=cortex-m33")
-set (MCPU_CORTEX_M55				  "-mcpu=cortex-m55")
-set (MCPU_CORTEX_M85				  "-mcpu=cortex-m85")
-set (MFPU_FPV4_SP_D16                 "-mfpu=fpv4-sp-d16")
-set (MFPU_FPV5_D16                    "-mfpu=fpv5-d16")
-set (RUNTIME_LIBRARY_REDUCED_C        "--specs=nano.specs")
-set (RUNTIME_LIBRARY_STD_C            "")
-set (RUNTIME_LIBRARY_SYSCALLS_MINIMAL "--specs=nosys.specs")
-set (RUNTIME_LIBRARY_SYSCALLS_NONE    "")
-set (MFLOAT_ABI_SOFTWARE              "-mfloat-abi=soft")
-set (MFLOAT_ABI_HARDWARE              "-mfloat-abi=hard")
-set (MFLOAT_ABI_MIX                   "-mfloat-abi=softfp")
-#######################################################################
-
 ###################### VARIABLES ######################################
 set (PROJECT_NAME             "mpg_stm32f4_cmake2")
 set (PROJECT_TYPE             "exe")
@@ -50,24 +16,24 @@ set (RUNTIME_LIBRARY_SYSCALLS "--specs=nosys.specs")
 
 ############Set Directories############################################
 set(CORE_DIR ${CMAKE_SOURCE_DIR}/Core)
-set(Core1 ${CORE_DIR}/Inc/)
+set(Core_Inc ${CORE_DIR}/Inc/)
 set(Core2 ${CORE_DIR}/tm_stm32f4_usart/)
 set(Src_Dir ${CORE_DIR}/Src/)
 set(Startup_Dir ${CORE_DIR}/Startup/)
 #######################################################################
 set(DRIVERS_DIR ${CMAKE_SOURCE_DIR}/Drivers/)
-set(DRIVERS1 ${DRIVERS_DIR}/CMSIS/Include)
-set(DRIVERS2 ${DRIVERS_DIR}/CMSIS/Device/ST/STM32F4xx/Include)
+set(DRV_CMSIS_INCLUDE ${DRIVERS_DIR}/CMSIS/Include)
+set(DRV_CMSIS_DEV_ST_INCLUDE ${DRIVERS_DIR}/CMSIS/Device/ST/STM32F4xx/Include)
 set(DRIVERS3 ${DRIVERS_DIR}/STM32F4xx_HAL_Driver/Inc/Legacy)
-set(DRIVERS4 ${DRIVERS_DIR}/STM32F4xx_HAL_Driver/Inc)
+set(DRV_HAL_Inc ${DRIVERS_DIR}/STM32F4xx_HAL_Driver/Inc)
 set(DRIVERS5 ${DRIVERS_DIR}/BSP/Components/dp83848)
 
 set(LWIP1 ${CMAKE_SOURCE_DIR}/LWIP/App/)
-set(LWIP2 ${CMAKE_SOURCE_DIR}/LWIP/Target/)
+set(LWIP_TARGET ${CMAKE_SOURCE_DIR}/LWIP/Target/)
 
 set(MIDDLEWARE ${CMAKE_SOURCE_DIR}/Middlewares/Third_Party)
-set(MIDDWARE1 ${MIDDLEWARE}/LwIP/src/include)
-set(MIDDWARE2 ${MIDDLEWARE}/LwIP/system)
+set(MDD_LWIP_SRC_INCLUDE ${MIDDLEWARE}/LwIP/src/include)
+set(MDD_LWIP_SYS ${MIDDLEWARE}/LwIP/system)
 set(MIDDWARE3 ${MIDDLEWARE}/LwIP/src/include/netif/ppp)
 set(MIDDWARE4 ${MIDDLEWARE}/LwIP/src/include/lwip)
 set(MIDDWARE5 ${MIDDLEWARE}/LwIP/src/include/lwip/apps)
@@ -80,9 +46,9 @@ set(MIDDWARE11 ${MIDDLEWARE}/LwIP/src/include/compat/posix/net)
 set(MIDDWARE12 ${MIDDLEWARE}/LwIP/src/include/compat/posix/sys)
 set(MIDDWARE13 ${MIDDLEWARE}/LwIP/src/include/compat/stdc)
 set(MIDDWARE14 ${MIDDLEWARE}/LwIP/system/arch)
-set(MIDDWARE15 ${MIDDLEWARE}/FreeRTOS/Source/include)
-set(MIDDWARE16 ${MIDDLEWARE}/FreeRTOS/Source/portable/GCC/ARM_CM4F)
-set(MIDDWARE17 ${MIDDLEWARE}/FreeRTOS/Source/CMSIS_RTOS_V2)
+set(MDD_FRTOS_SRC_INCLUDE ${MIDDLEWARE}/FreeRTOS/Source/include)
+set(MDD_FRTOS_SRC_GCC_ARM_CM4 ${MIDDLEWARE}/FreeRTOS/Source/portable/GCC/ARM_CM4F)
+set(MDD_FRTOS_SRC_CMSIS_V2 ${MIDDLEWARE}/FreeRTOS/Source/CMSIS_RTOS_V2)
 
 ################## PROJECT SETUP ######################################
 set(DRIVERS_SRC1 ${DRIVERS_DIR}/STM32F4xx_HAL_Driver/Src)
@@ -116,7 +82,7 @@ set (PROJECT_SOURCES
 		${DRIVERS_SRC1}/stm32f4xx_hal_dma_ex.c
 		${DRIVERS_SRC1}/stm32f4xx_hal_cortex.c
 		${LWIP1}/lwip.c
-		${LWIP2}/ethernetif.c
+		${LWIP_TARGET}/ethernetif.c
 		##############
 		  ${CMAKE_SOURCE_DIR}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c
 		  ${CMAKE_SOURCE_DIR}/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
@@ -171,12 +137,12 @@ set (PROJECT_DEFINES
 
 set (PROJECT_INCLUDES
 	# LIST INCLUDE DIRECTORIES HERE
-	${Core1} ${Core2} 
-	${DRIVERS1} ${DRIVERS2} ${DRIVERS3} ${DRIVERS4} ${DRIVERS5}
-	${LWIP1} ${LWIP2}
-	${MIDDWARE1} ${MIDDWARE2} ${MIDDWARE3} ${MIDDWARE4} ${MIDDWARE5} ${MIDDWARE6}
+	${Core_Inc} ${Core2} 
+	${DRV_CMSIS_INCLUDE} ${DRV_CMSIS_DEV_ST_INCLUDE} ${DRIVERS3} ${DRV_HAL_Inc} ${DRIVERS5}
+	${LWIP1} ${LWIP_TARGET}
+	${MDD_LWIP_SRC_INCLUDE} ${MDD_LWIP_SYS} ${MIDDWARE3} ${MIDDWARE4} ${MIDDWARE5} ${MIDDWARE6}
 	${MIDDWARE7} ${MIDDWARE8} ${MIDDWARE9} ${MIDDWARE10} ${MIDDWARE11} ${MIDDWARE12}
-	${MIDDWARE13} ${MIDDWARE14} ${MIDDWARE15} ${MIDDWARE16} ${MIDDWARE17} 
+	${MIDDWARE13} ${MIDDWARE14} ${MDD_FRTOS_SRC_INCLUDE} ${MDD_FRTOS_SRC_GCC_ARM_CM4} ${MDD_FRTOS_SRC_CMSIS_V2} 
     )
 ############ MODIFY ACCORDING TO REQUIREMENTS) ########################
 set (CMAKE_C_FLAGS_INIT "${MCPU} -std=gnu11 ${MFPU} ${MFLOAT_ABI} ${RUNTIME_LIBRARY} -mthumb -Wall -Werror")
@@ -190,22 +156,20 @@ set(CPU_FLAGS )
 project(${PROJECT_NAME})
 enable_language(ASM)
 
-
 set(CMAKE_SYSTEM_PROCESSOR cortex-m4)
-set(CMAKE_SYSTEM_NAME STM32Cube)
-set(BOARD STM32F769I-DISCO)
+#set(CMAKE_SYSTEM_NAME STM32Cube)
+#set(BOARD STM32F769I-DISCO)
 set(CMAKE_SOURCE_DIR ${CMAKE_SOURCE_DIR})
 set(CMAKE_C_COMPILER ${CMAKE_TOOLCHAIN_PATH}/${TOOLCHAIN_PREFIX}gcc.exe)
 set(CMAKE_CXX_COMPILER  ${CMAKE_TOOLCHAIN_PATH}/${TOOLCHAIN_PREFIX}g++.exe)
 set(CMAKE_ASM_COMPILER ${CMAKE_TOOLCHAIN_PATH}/${TOOLCHAIN_PREFIX}gcc.exe)
 
-if (${PROJECT_TYPE} MATCHES ${PROJECT_TYPE_EXECUTABLE})
-  add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
-  add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${CMAKE_PROJECT_NAME}>)
-elseif (${PROJECT_TYPE} MATCHES ${PROJECT_TYPE_STATIC_LIBRARY})
-  add_library(${PROJECT_NAME} ${PROJECT_SOURCES})
-endif()
+add_subdirectory(${CMAKE_SOURCE_DIR}/MPG/ MPG)
 
+ add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
+ add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${CMAKE_PROJECT_NAME}>)
+
+#target_link_libraries(${PROJECT_NAME} PUBLIC osal)
 add_compile_definitions (${PROJECT_DEFINES})
 target_compile_options(${PROJECT_NAME} PRIVATE ${MCPU} ${MFLOAT_ABI} -mthumb ${MFPU})
 target_link_options(${PROJECT_NAME} PRIVATE -T${LINKER_SCRIPT} ${MCPU} ${MFLOAT_ABI} -mthumb ${MFPU})
@@ -213,13 +177,6 @@ include_directories (${PROJECT_INCLUDES})
 
 set (CMAKE_EXECUTABLE_SUFFIX ".elf")
 set (CMAKE_STATIC_LIBRARY_SUFFIX ".a")
-###################################Add subdirectories#####################
-#add_subdirectory(Drivers/STM32F4xx_HAL_Driver/Src/ STM_HAL_DRV)
-#add_subdirectory(Middlewares/Third_Party/LwIP/ MIDDWARE_MOD)
-#add_subdirectory(Middlewares/Third_Party/FreeRTOS/Source/ FREERTOS_MOD)
-#add_subdirectory(${CMAKE_SOURCE_DIR}/osal/ OSAL)
-
-#target_link_libraries(${PROJECT_NAME} PUBLIC STM_HAL_DRV MIDDWARE_MOD FREERTOS_MOD)
 ###################################add custom build command to generate bin and hex file##############
  set(ELF_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.elf)
  set(HEX_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.hex)
