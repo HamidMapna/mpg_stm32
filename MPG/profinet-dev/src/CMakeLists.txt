@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.14)
 project(pf_src_lib)
 
+include_directories(${ALL_INCLUDES_DIR} ${OSAL_INCLUDE_DIR} ${MPG_SOURCE_DIR}/profinet-dev/src/ports/STM32Cube)
+
 add_library (${PROJECT_NAME}  STATIC
    device/pnet_api.c
    device/pf_block_reader.c
@@ -44,26 +46,6 @@ add_library (${PROJECT_NAME}  STATIC
    )
    
 ###############################
-target_include_directories(${PROJECT_NAME}  PUBLIC
- 	 ${CMAKE_CURRENT_SOURCE_DIR}/ports/STM32Cube
-     ${PF_Main_Include_Dir}/
-     ${MDD_FRTOS_SRC_INCLUDE}
-     ${Core_Inc}
-     ${MDD_FRTOS_SRC_GCC_ARM_CM4}     
-     ${CMAKE_BINARY_DIR}/include
-     ${OSAL_SOURCE_DIR}/include  
-     ${MDD_LWIP_SRC_INCLUDE}
-     ${MDD_LWIP_SYS}
-     ${LWIP_TARGET}
-     ${DRV_HAL_Inc}
-     ${DRV_CMSIS_DEV_ST_INCLUDE}
-     ${DRV_CMSIS_INCLUDE}
-     ${MDD_FRTOS_SRC_CMSIS_V2}
-     ${OSAL_SOURCE_DIR}/src/freertos
-     #${CMAKE_SOURCE_DIR}/modbus-tcp/src
-     #${CMAKE_SOURCE_DIR}/modbus-tcp/src/ports/linux
-     #${CMAKE_SOURCE_DIR}/modbus-tcp/src/device
-     #${CMAKE_SOURCE_DIR}/modbus-tcp/src/common
-   )   
+  
    #target_link_directories(${PROJECT_NAME} PUBLIC ${OSAL_BINARY_DIR}/)
    #target_link_libraries(${PROJECT_NAME} PRIVATE libosal.a)

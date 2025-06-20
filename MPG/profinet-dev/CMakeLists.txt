@@ -6,7 +6,7 @@ set(PF_Main_Include_Dir ${PF_DEV_SOURCE_DIR}/include)
 set(PF_Src_Dir ${PF_DEV_SOURCE_DIR}/src)
 set(PF_Src_Common_Dir ${PF_DEV_SOURCE_DIR}/src/common)
 set(PF_Src_Device_Dir ${PF_DEV_SOURCE_DIR}/src/device)
-#set(Libs_Dir ${MPG_SOURCE_DIR}/libs)
+
 
 option (PNET_OPTION_FAST_STARTUP "" ON)
 option (PNET_OPTION_PARAMETER_SERVER "" ON)

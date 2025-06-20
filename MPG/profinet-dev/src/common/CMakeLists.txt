@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(commonLib)
 
-set(PF_Ports_Linux_Dir ${PF_DEV_SOURCE_DIR}/src/ports/linux)
-add_subdirectory(${PF_Ports_Linux_Dir}/ portsLib)
+add_subdirectory(${PF_DEV_SOURCE_DIR}/src/ports/STM32Cube portsLib)
 
 set(COMM_SRC  
 pf_alarm.c
@@ -34,5 +33,7 @@ pf_ptcp.h
 pf_scheduler.h
 pf_udp.h
 )
+message("CURRENT_SOURCE_DIR=${CURRENT_SOURCE_DIR}")
+include_directories(${ALL_INCLUDES_DIR} ${OSAL_INCLUDE_DIR} ${PF_Comm_Dir} ${PF_dev_Dir})
 add_library(${PROJECT_NAME} SHARED ${COMM_HEADER} ${COMM_SRC})
 target_link_libraries(${PROJECT_NAME} PUBLIC portsLib osal)
