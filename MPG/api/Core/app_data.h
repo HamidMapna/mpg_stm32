@@ -35,7 +35,7 @@ extern "C" {
 
 #include <stdint.h>
 #include <stdbool.h>
-//#include "xml.h"
+#include "xml.h"
 
 	typedef int(*mb_write_cb)(mb_tcp_cfg_t *, uint32_t*, uint16_t*);
 	

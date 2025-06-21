@@ -11,5 +11,5 @@ set(HEADER_FILES
  pnal_sys.h
 )
 include_directories(${OSAL_INCLUDE_DIR})
-add_library(${PROJECT_NAME} SHARED ${HEADER_FILES} ${SRC_FILES})
+add_library(${PROJECT_NAME} STATIC ${HEADER_FILES} ${SRC_FILES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${ALL_INCLUDES_DIR})

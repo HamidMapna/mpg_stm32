@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(pf_src_lib)
 
-include_directories(${ALL_INCLUDES_DIR} ${OSAL_INCLUDE_DIR} ${MPG_SOURCE_DIR}/profinet-dev/src/ports/STM32Cube)
+include_directories(${ALL_INCLUDES_DIR} ${MPG_SOURCE_DIR}/profinet-dev/src/ports/STM32Cube)
 
 add_library (${PROJECT_NAME}  STATIC
    device/pnet_api.c
