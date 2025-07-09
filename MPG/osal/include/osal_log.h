@@ -72,7 +72,7 @@ extern "C" {
 
 typedef void (*os_log_t) (uint8_t type, const char * fmt, ...) CC_FORMAT (2, 3);
 
-//extern os_log_t os_log;
+extern os_log_t os_log;
 
 #ifdef __cplusplus
 }

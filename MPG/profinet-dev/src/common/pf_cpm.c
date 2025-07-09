@@ -137,10 +137,10 @@ int pf_cpm_create (pnet_t * net, pf_ar_t * p_ar, uint32_t crep)
    ret = net->cpm_drv->create (net, p_ar, crep);
    if (ret != 0)
    {
-      LOG_FATAL (
+      /*LOG_FATAL (
          PF_CPM_LOG,
          "CPM(%d): Driver create request failed\n",
-         __LINE__);
+         __LINE__);*/
    }
 
    return ret;
@@ -172,7 +172,7 @@ int pf_cpm_close_req (pnet_t * net, pf_ar_t * p_ar, uint32_t crep)
    }
    else
    {
-      LOG_FATAL (PF_CPM_LOG, "CPM(%d): Driver close request failed\n", __LINE__);
+      //LOG_FATAL (PF_CPM_LOG, "CPM(%d): Driver close request failed\n", __LINE__);
    }
 
    return ret;

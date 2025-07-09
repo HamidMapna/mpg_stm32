@@ -33,7 +33,10 @@ pf_ptcp.h
 pf_scheduler.h
 pf_udp.h
 )
-message("CURRENT_SOURCE_DIR=${CURRENT_SOURCE_DIR}")
-include_directories(${ALL_INCLUDES_DIR} ${PF_Comm_Dir} ${PF_dev_Dir})
+
+include_directories(${ALL_INCLUDES_DIR} ${PF_Comm_Dir} ${PF_dev_Dir} ${OSAL_SRC_FRTOS_SYS_DIR} ${OSAL_INCLUDE_DIR})
 add_library(${PROJECT_NAME} STATIC ${COMM_HEADER} ${COMM_SRC})
-target_link_libraries(${PROJECT_NAME} PUBLIC portsLib osal)
+target_link_libraries(${PROJECT_NAME} PUBLIC portsLib)
+
+target_compile_options(${PROJECT_NAME} PRIVATE ${MCPU} ${MFLOAT_ABI} -mthumb ${MFPU})
+target_link_options(${PROJECT_NAME} PRIVATE -T${LINKER_SCRIPT} ${MCPU} ${MFLOAT_ABI} -mthumb ${MFPU})

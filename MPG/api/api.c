@@ -1,5 +1,5 @@
 #include "app_commons.h"
-#include "microhttpd_api.h"
+//#include "microhttpd_api.h"
 #include "mb_tcp_master.h"
 #include <stdlib.h>
 #include <string.h>
@@ -15,7 +15,7 @@
 #define APP_BG_WORKER_THREAD_PRIORITY  5
 #define APP_BG_WORKER_THREAD_STACKSIZE 4096 /* bytes */
 
-int main()
+void api_init()
 {
 	app_data_t* mpg_app = NULL;
 	pnet_cfg_t pnet_cfg = { 0 };
@@ -41,10 +41,10 @@ int main()
 	pnet_cfg.num_physical_ports = number_of_ports;
 
 	/* Operating system specific settings */
-	pnet_cfg.pnal_cfg.snmp_thread.prio = APP_SNMP_THREAD_PRIORITY;
-	pnet_cfg.pnal_cfg.snmp_thread.stack_size = APP_SNMP_THREAD_STACKSIZE;
-	pnet_cfg.pnal_cfg.eth_recv_thread.prio = APP_ETH_THREAD_PRIORITY;
-	pnet_cfg.pnal_cfg.eth_recv_thread.stack_size = APP_ETH_THREAD_STACKSIZE;
+	//pnet_cfg.pnal_cfg.snmp_thread.prio = APP_SNMP_THREAD_PRIORITY;
+	//pnet_cfg.pnal_cfg.snmp_thread.stack_size = APP_SNMP_THREAD_STACKSIZE;
+	//pnet_cfg.pnal_cfg.eth_recv_thread.prio = APP_ETH_THREAD_PRIORITY;
+	//pnet_cfg.pnal_cfg.eth_recv_thread.stack_size = APP_ETH_THREAD_STACKSIZE;
 	pnet_cfg.pnal_cfg.bg_worker_thread.prio = APP_BG_WORKER_THREAD_PRIORITY;
 	pnet_cfg.pnal_cfg.bg_worker_thread.stack_size = APP_BG_WORKER_THREAD_STACKSIZE;
 
@@ -68,12 +68,10 @@ int main()
 	//create_daemon_handler(HTTP);
 	//create_daemon_handler(HTTPS);
 	//launch modbus tcp master&slave//
-	init_modbus_tcp();
+	//init_modbus_tcp();
 	
 	for (;;)
 	{
 		os_usleep(APP_MAIN_SLEEPTIME_US);
 	}
-
-	return 0;
 }

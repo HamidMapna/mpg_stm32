@@ -142,14 +142,14 @@ pnal_eth_handle_t * pnal_eth_init (
    netif = netif_find (if_name);
    if (netif == NULL)
    {
-      os_log (LOG_LEVEL_ERROR, "Network interface \"%s\" not found!\n", if_name);
+      //os_log (LOG_LEVEL_ERROR, "Network interface \"%s\" not found!\n", if_name);
       return NULL;
    }
 
    handle = pnal_eth_allocate_handle();
    if (handle == NULL)
    {
-      os_log (LOG_LEVEL_ERROR, "Too many network interfaces\n");
+      //os_log (LOG_LEVEL_ERROR, "Too many network interfaces\n");
       return NULL;
    }
 

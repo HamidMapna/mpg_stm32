@@ -22,8 +22,8 @@ ${LIBXML2_INCLUDE_DIR}/
 ${mb_srcLib_SOURCE_DIR}/ports/STM32Cube/
 ${Api_Core_Dir}/
 ${ALL_INCLUDES_DIR}
-#${OSAL_SOURCE_DIR}/include/
-#${OSAL_SOURCE_DIR}/src/linux/
+${OSAL_SRC_FRTOS_SYS_DIR}
+${OSAL_INCLUDE_DIR}
 )
 
 set(mbus_SRC 
@@ -46,4 +46,4 @@ set(mbus_SRC
   )
   
 add_library(${PROJECT_NAME}  STATIC ${mbus_SRC})
-target_link_libraries(${PROJECT_NAME} PUBLIC mb_stm32_srcLib xml2)
+target_link_libraries(${PROJECT_NAME} PUBLIC mb_stm32_srcLib)

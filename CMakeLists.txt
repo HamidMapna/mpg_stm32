@@ -7,7 +7,7 @@ set(TOOLCHAIN_PREFIX arm-none-eabi-)
 ###################### VARIABLES ######################################
 set (PROJECT_NAME             "mpg_stm32f4_cmake2")
 set (PROJECT_TYPE             "exe")
-set (LINKER_SCRIPT            "../STM32F407VETX_FLASH.ld")
+set (LINKER_SCRIPT            "${CMAKE_SOURCE_DIR}/STM32F407VETX_FLASH.ld")
 set (MCPU                     "-mcpu=Cortex-M4")
 set (MFPU                 "-mfpu=fpv4-sp-d16")
 set (MFLOAT_ABI               "-mfloat-abi=hard")
@@ -20,6 +20,10 @@ set(Core_Inc ${CORE_DIR}/Inc/)
 set(Core2 ${CORE_DIR}/tm_stm32f4_usart/)
 set(Src_Dir ${CORE_DIR}/Src/)
 set(Startup_Dir ${CORE_DIR}/Startup/)
+set(MPG_API_DIR ${CMAKE_SOURCE_DIR}/MPG/api)
+set(Api_Dir		${CMAKE_SOURCE_DIR}/MPG/api)
+set(OSAL_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/MPG/osal/include)
+set(OSAL_SRC_FRTOS_SYS_DIR ${CMAKE_SOURCE_DIR}/MPG/osal/src/freertos)
 #######################################################################
 set(DRIVERS_DIR ${CMAKE_SOURCE_DIR}/Drivers/)
 set(DRV_CMSIS_INCLUDE ${DRIVERS_DIR}/CMSIS/Include)
@@ -137,6 +141,7 @@ set (PROJECT_DEFINES
 
 set (PROJECT_INCLUDES
 	# LIST INCLUDE DIRECTORIES HERE
+	${MPG_API_DIR}
 	${Core_Inc} ${Core2} 
 	${DRV_CMSIS_INCLUDE} ${DRV_CMSIS_DEV_ST_INCLUDE} ${DRIVERS3} ${DRV_HAL_Inc} ${DRIVERS5}
 	${LWIP1} ${LWIP_TARGET}
@@ -163,17 +168,21 @@ set(CMAKE_SOURCE_DIR ${CMAKE_SOURCE_DIR})
 set(CMAKE_C_COMPILER ${CMAKE_TOOLCHAIN_PATH}/${TOOLCHAIN_PREFIX}gcc.exe)
 set(CMAKE_CXX_COMPILER  ${CMAKE_TOOLCHAIN_PATH}/${TOOLCHAIN_PREFIX}g++.exe)
 set(CMAKE_ASM_COMPILER ${CMAKE_TOOLCHAIN_PATH}/${TOOLCHAIN_PREFIX}gcc.exe)
-
-add_subdirectory(${CMAKE_SOURCE_DIR}/MPG/ MPG)
-
- add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
- add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${CMAKE_PROJECT_NAME}>)
-
-#target_link_libraries(${PROJECT_NAME} PUBLIC osal)
 add_compile_definitions (${PROJECT_DEFINES})
+
+include_directories (${PROJECT_INCLUDES})
+#add_subdirectory(${CMAKE_SOURCE_DIR}/MPG/ MPG)
+#add_subdirectory(${Api_Dir}/ API)
+
+add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
+add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${CMAKE_PROJECT_NAME}>)
+
+#target_link_libraries(${PROJECT_NAME} PUBLIC API)
+target_link_directories(${PROJECT_NAME} PUBLIC ${CMAKE_BINARY_DIR}/MPG/API)
+
 target_compile_options(${PROJECT_NAME} PRIVATE ${MCPU} ${MFLOAT_ABI} -mthumb ${MFPU})
 target_link_options(${PROJECT_NAME} PRIVATE -T${LINKER_SCRIPT} ${MCPU} ${MFLOAT_ABI} -mthumb ${MFPU})
-include_directories (${PROJECT_INCLUDES})
+
 
 set (CMAKE_EXECUTABLE_SUFFIX ".elf")
 set (CMAKE_STATIC_LIBRARY_SUFFIX ".a")
@@ -186,7 +195,7 @@ set (CMAKE_STATIC_LIBRARY_SUFFIX ".a")
 					 COMMAND ${CMAKE_OBJCOPY} -O binary ${ELF_FILE} ${BIN_FILE}
 					 COMMENT "Generating HEX and BINfiles" 
 )
-############################################################
+###########################################################
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD 
 					 COMMAND "${STLINK_CLI_PATH}" -c SWD -P ${HEX_FILE} HEX -V -Rst
 					 COMMENT  "Flashing HEX file via ST-LINK CLI"
