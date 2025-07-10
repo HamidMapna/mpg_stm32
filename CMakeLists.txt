@@ -59,6 +59,8 @@ set(DRIVERS_SRC1 ${DRIVERS_DIR}/STM32F4xx_HAL_Driver/Src)
 set (PROJECT_SOURCES
 	# LIST SOURCE FILES HERE
 		${Startup_Dir}/startup_stm32f407vetx.s
+		${Src_Dir}/gpio.c
+		${Src_Dir}/usart.c
 		${Src_Dir}/freertos.c
 		${Src_Dir}/main.c
 		${Src_Dir}/syscalls.c
